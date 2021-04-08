@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Paper quito</title>
+    <link rel="shortcut icon" href="./favicon.ico"/>
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/white.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/zenburn.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">
+<style type="text/css">
+p { text-align: left; font-size: 1em;}
+</style>
+
+
+**Title:** 
+
+Assessing the Effectiveness of Input and Output Coverage Criteria for Testing Quantum Programs 
+
+**Author:**  
+
+Shaukat Ali, Paolo Arcaini, Xinyi Wang, Tao Yue
+
+
+
+
+</script></section><section  data-markdown><script type="text/template">
+
+## Abstract 
+
+<p class="fragment">Quantum programs implement quantum algorithms
+solving complex computational problems.</p>
+
+
+<p class="fragment">Testing such programs is challenging</p>
+
+<p class="fragment" style = 'color:red;'>Why?</p>
+
+<p class="fragment">inherent characteristics of Quantum Computing (QC)</p>
+
+<p class="fragment">1. probabilistic nature</p>
+
+<p class="fragment">2. computations in superposition</p>
+
+</script></section><section  data-markdown><script type="text/template">
+
+## Abstract
+
+We need "**automated and systematic testing**" to ensure the correct behavior of quantum programs.
+
+<p class="fragment" style="color:green">Quito (QUantum InpuT
+Output coverage)</p>
+<p class="fragment">1. three coverage criteria on I/O of a quantum program  + their test generation strategies.</p>
+
+<p class="fragment">2. two types of test oracles + a procedure to determine the passing and failing of test suites with statistical analyses.</p>
+
+</script></section><section  data-markdown><script type="text/template">
+
+**Evaluation method of the three coverage criteria:**
+
+- Experiments are conducted with *five quantum programs*.
+
+- method: [mutation analysis. ](https://en.wikipedia.org/wiki/Mutation_testing#:~:text=Mutation%20testing%20(or%20mutation%20analysis,a%20program%20in%20small%20ways.)
+
+
+
+<aside class="notes"><p>Mutation testing/ Mutation analysis/program mutation</p>
+<p>is used to design new software tests and evaluate the quality of existing software tests. </p>
+<p>Each mutated version is called a mutant and tests detect and reject mutants by causing the behavior of the original version to differ from the mutant. (Killing the mutant)</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+
+###  What is mutation analysis?  😳 
+
+- What it does? (function): 
+
+  we use to **design new software tests** and **evaluate the quality of existing software tests**. 
+
+- Mutant:
+
+  Each mutated version of a a program.
+
+- Killing the mutant:
+
+  Tests detect and reject mutants
+
+</script></section><section  data-markdown><script type="text/template">
+
+```c
+if (a && b) {
+    c = 1;
+} else {
+    c = 0;
+}
+```
+
+```c
+if (a || b) {
+    c = 1;
+} else {
+    c = 0;
+}
+```
+
+</script></section><section  data-markdown><script type="text/template">
+- The RIP Model (for the test to kill this mutant, three condition should be met)
+
+  1. A test must reach the mutated statement
+
+  2. Test input date should infect the program state by causing different program states for the mutant and the original program. 
+
+     ```c
+     a = 1; b = 0;
+     ```
+
+  3. The incorrect program state (the value of 'c') must propagate to the program's output and be checked by the test.
+
+</script></section><section  data-markdown><script type="text/template">
+
+- Equivalent mutants
+
+  There are cases where it is not possible to find a test case that could kill this mutant. The resulting program is behaviorally equivalent to the original one. 
+
+  Such mutants are equivalent mutants.
+
+- Mutation score 
+
+  The number of mutants killed / total number of mutants.
+
+</script></section><section  data-markdown><script type="text/template">
+
+- Goals: 
+  - identify weakly tested pieces of code
+  - identify weak tests
+  - compute the mutation score
+  - learn about error propagation and state infection in the program
+
+</script></section><section  data-markdown><script type="text/template">
+
+### What is test oracles?
+
+In computing, software engineering, and software testing, a test oracle (or just oracle) is a mechanism for determining whether a test has passed or failed.
+
+A test oracle is a source of information about whether the output of a program (or function or method) is correct or not.
+
+</script></section><section  data-markdown><script type="text/template">
+
+The oracle might be
+
+- a program
+- documentation
+- a documented algorithm
+- a human domain expert 
+- or any other way of telling that output is correct.
+
+</script></section><section  data-markdown><script type="text/template">
+
+### 1. Introduction
+
+To ensure the correct implementation of a quantum program,  automated and systematic testing is a natural choice.
+
+- Testing challenges 
+- Testing methods
+  -  QSharpCheck (Honarvar et al.)
+
+This paper proposes **three coverage criteria on inputs and outputs of a quantum program** based on QSharpCheck.
+
+</script></section><section  data-markdown><script type="text/template">
+
+### 2. Related Work
+
+- Modeling and verifying quantum programs in terms of their correctness (developing model checkers for quantum Markov chains).[Article](https://www.uts.edu.au/research-and-teaching/our-research/centre-quantum-software-and-information/qsi-research/qsi-research-programs/quantum-programming-and-verification)
+
+</script></section><section  data-markdown><script type="text/template">
+
+- [QuanFuzz](),  a search-based test input generator for quantum software.
+  -  extracting quantum-sensitive information from a quantum program.
+  -  a grey-box fuzz testing model to generate inputs to change the state of quantum
+    registers and maximize the coverage.
+
+</script></section><section  data-markdown><script type="text/template">
+
+- A comprehensive survey on quantum software engineering. 
+
+</script></section><section  data-markdown><script type="text/template">
+
+- QSharpCheck
+
+  - a test property specifification language for
+
+    Q# programs
+
+  - a property-based testing method for generating and executing test cases
+
+</script></section><section  data-markdown><script type="text/template">
+
+- This paper's contributions
+
+  1. The definition of three testing coverage criteria.
+
+  2. Proposing an algorithm to generate a test suite for a quantum program for each criterion.  
+
+       (the full coverage during the test execution )
+
+  3. two test oracles and assessing test execution results automatically with the help of statistical tests such as the Wilcoxon test.
+
+</script></section><section  data-markdown><script type="text/template">
+
+### 3. BACKGROUND AND RUNNING EXAMPLE
+
+- a quantum state:
+  - a value
+  - an amplitude $\alpha$
+
+</script></section><section  data-markdown><script type="text/template">
+
+```javascript
+qc.reset(2); //Reserve two qubits
+// Creating two qubits
+var qubit1 = qint.new(1, ’Qubit1’);
+var qubit2 = qint.new(1, ’Qubit2’);
+qc.write(0); //Initializing to 0 89 qc.label("Entangle Qubits");
+qubit1.had(); // Put qubit1 in superposition
+qubit2.cnot(qubit1); // Entangle the two qubits
+qc.label();
+
+qc.nop();
+var result = qc.read(); // Read both qubits
+
+qc.print(result); //Output qubits values
+```
+
+QCEngine's javascript-based language.
+
+Book: [Programming Quantum Computers](https://www.amazon.com/Programming-Quantum-Computers-Essential-Algorithms/dp/1492039683) (2019)
+
+</script></section><section  data-markdown><script type="text/template">
+
+- This paper doesn't consider testing the phases of a quantum program (future work).
+- Testing a quantum program as a black-box.
+  - There might exist indirect ways to estimate superposition states (including magnitudes and phases) of a program without destroying them (future work). [Book]
+
+</script></section><section  data-markdown><script type="text/template">
+
+### 4. TEST ORACLES AND COVERAGE CRITERIA
+
+- Definitions
+- test oracles
+- coverage criteria
+- testing process of Quito
+
+</script></section><section  data-markdown><script type="text/template">
+
+**A. Definitions**
+
+Definition1 (Inputs and Outputs):
+
+- `$Q=\{q_1,...q_n\}$` : the set of qubits
+- input: all the qubits in $Q$
+- output: a subset of quibits $O$, i.e., $O \subseteq Q$
+- $D_I = B^{\vert Q\vert}$: the set of input values
+- $D_O = B^{\vert O \vert}$: the set of output values
+
+</script></section><section  data-markdown><script type="text/template">
+
+Definition2 (Quantum program)
+
+A quantum program QP can then be defined as a function QP: $D_I \rightarrow 2^{D_O}$.
+
+</script></section><section  data-markdown><script type="text/template">
+
+Definition 3 (Program specification)
+
+- Program specification (PS) identifies a subset of input values $VD_I \subseteq D_I$ (valid input values).
+
+- Program specification states the expected probabilities of occurrence of all the output values $o \in D_O$.
+
+`$PS(i) = \{(o_1, p_1), ..., (o_{|D_O|}, p_{|D_O|})\}$`
+
+`$PS(\langle i, o_h \rangle) = p_h$`
+
+`$\sum_{h=1}^{|D_O|}p_h = 1$`
+
+</script></section><section  data-markdown><script type="text/template">
+
+Definition 4 (Valid output values)
+
+`$VD_O = \{o\in D_O | (\exists i \in D_I: PS(\langle i, o\rangle)) \neq 0 \}$`
+
+</script></section><section  data-markdown><script type="text/template">
+
+Definition 5 (Test input, test outcome, and test suite)
+
+- **Test input:** A valid assignment to the qubits. $t \in VD_I$
+- **Test outcome:** The pair $\langle t, res\rangle$, where $res = QP(t)$ is the output value returned by the program for $t$ in a given execution.
+- **Test suite:** A set of test outcomes.
+
+</script></section><section  data-markdown><script type="text/template">
+
+**B. Test Oracles**
+
+The assessment of a test suite for quantum programs is  different from a classical and deterministic program.
+
+The probabilistic nature of quantum programs.
+
+</script></section><section  data-markdown><script type="text/template">
+
+- In a classical program:
+
+  - a test fails if a given assertion is violated.
+  - a test passes if all the assertions hold.
+
+- In a quantum program:
+
+  A test suite could have 3 outcomes:
+
+  - *Definitely fail*
+  - *Likely fail*
+  - *Inconclusive*
+
+</script></section><section  data-markdown><script type="text/template">
+
+This paper proposes two test oracles (WOO and OPO).
+
+These two oracles target different types of faults:
+
+- WOO checks whether a wrong output is produced.
+- OPO checks whether the outputs are produced with unexpected occurrence probabilities.
+
+</script></section><section  data-markdown><script type="text/template">
+
+1. *Wrong Output Oracle (WOO)*:
+
+   WOO simply checks that the quantum program only produces valid output values.
+
+   $PS(\langle i, o\rangle)) = 0 \rightarrow$ *Definitely fail*
+
+</script></section><section  data-markdown><script type="text/template">
+
+2. *Output Probability Oracle (OPO)*
+
+   OPO checks whether the quantum program returns an expected output with its corresponding expected probability.
+   
+   The oracle assessment is done on a set of test suites:
+   
+   `$\widetilde{TS_s} = \{\widetilde{TS_1}, ..., \widetilde{TS_M}\}$` 
+
+</script></section><section  data-markdown><script type="text/template">
+
+2. *Output Probability Oracle (OPO)*
+
+   The output probability oracle is checked for each input-output pair $\langle i, o \rangle$ such that $PS(\langle i, o\rangle) \neq 0$.
+
+   </script></section><section  data-markdown><script type="text/template">
+
+   Given the test suites `$\widetilde{TS_s} = \{\widetilde{TS_1}, ..., \widetilde{TS_M}\}$` ,
+
+   we compute the *input-output occurrence* as `$ioo(\widetilde{TS_S}, \langle i, o\rangle) = \{p_1,...,p_M\}$` 
+
+   where each `$p_j$`:
+
+   <img src="https://raw.githubusercontent.com/yukariio/img/master/img-image-20210408110325287.png" alt="image-20210408110325287" style="zoom: 80%;" />
+
+   </script></section><section  data-markdown><script type="text/template">
+
+   The oracle assessment is then performed using a statistical test.
+
+   - The oracle assesses a failure if the distribution is significantly different from the expected probability.
+
+   <img src="https://raw.githubusercontent.com/yukariio/img/master/img-image-20210408110921601.png" alt="image-20210408110921601" style="zoom:80%;" />
+
+   - If the null hypothesis cannot be rejected, we say that the test is inconclusive.
+
+     `$incon_{OPO} = \neg fail_{OPO}$`
+
+</script></section><section  data-markdown><script type="text/template">
+
+**C. Coverage Criteria**
+
+1. *Input Coverage (IC)*
+
+   The input coverage criterion requires that for each valid value `$i \in VD_I$`, there exists a test `$t = i$`.
+
+   A single execution of a test suite is not sufficient to assess whether the test suite passes or fails for some types of oracles (OPO).
+
+   Therefore, we generate K test suites `$TS_S = \{ TS_1, ..., TS_K\}$` (K is a parameter of the input coverage criterion.)
+
+   </script></section><section  data-markdown><script type="text/template">
+
+   ![image-20210408115042304](https://raw.githubusercontent.com/yukariio/img/master/img-image-20210408115042304.png)![image-20210408120548367](https://raw.githubusercontent.com/yukariio/img/master/img-image-20210408120548367.png)
+
+   </script></section><section  data-markdown><script type="text/template">
+
+   
+
+2. *Output Coverage (OC)*
+
+   The output coverage criterion requires that each valid output value `$o \in VD_O$` is observed at least once.
+
+   K test suites and collect them in `$TS_S$`.
+
+   </script></section><section  data-markdown><script type="text/template">
+
+   <img src="https://raw.githubusercontent.com/yukariio/img/master/img-image-20210408120024164.png" alt="image-20210408120024164" style="zoom:80%;" />
+
+   <img src="https://raw.githubusercontent.com/yukariio/img/master/img-image-20210408120503926.png" alt="image-20210408120503926" style="zoom:80%;" />
+
+   </script></section><section  data-markdown><script type="text/template">
+
+3. *Input-Output Coverage*
+
+   The input-output coverage criterion requires that, for each input-output pair `$\langle i, o\rangle$` such that `$PS(\langle i, o\rangle) \neq 0$`, there exists a test `$t = i$` whose result is `$QP(t) = o$`.
+
+   </script></section><section  data-markdown><script type="text/template">
+
+   <img src="https://raw.githubusercontent.com/yukariio/img/master/img-image-20210408121654158.png" alt="image-20210408121654158" style="zoom:80%;" />
+
+   <img src="https://raw.githubusercontent.com/yukariio/img/master/img-image-20210408122040151.png" alt="image-20210408122040151" style="zoom: 80%;" />
+
+   </script></section><section  data-markdown><script type="text/template">
+
+**The application of the testing process:**
+
+How the testing framework must be used:
+
+Given quantum program QP having specification PS, 
+
+</script></section><section  data-markdown><script type="text/template">
+
+<img src="https://raw.githubusercontent.com/yukariio/img/master/img-image-20210408122652530.png" alt="image-20210408122652530" style="zoom:80%;" />
+
+</script></section><section  data-markdown><script type="text/template">
+
+### 5. ASSESSMENT OF THE PROPOSED COVERAGE CRITERIA THROUGH MUTATION ANALYSIS
+To assess the coverage criteria’ effectiveness in terms of finding faults, this paper performs mutation analysis.
+
+Four categories of mutation operators:
+
+- *Add Gate* (AG)
+- *Delete Gate* (DG)
+- *Replace Gate* (RG)
+- *Replace Mathematical Operator* (RMO)
+
+</script></section><section  data-markdown><script type="text/template">
+
+- Let `$MUTS = \{m_1, ...m_n\}$` be the set of mutants of a program QP.
+
+- Given a coverage criterion `$C$`, we test each mutant `$m \in MUTS$`, 
+
+  `$TP_C(m, PS) = (TS_S, res)$`,
+
+  The mutant is killed if res if `$fail_{WOO}$` or `$fail_{OPO}$`, otherwise it is not killed (`$res$` is `$incon_{OPO}$`).
+
+</script></section><section  data-markdown><script type="text/template">
+
+Given all the test results
+
+`$MR = \{\langle TS_{s_1}, res_1 \rangle,...,\langle TS_{s_n}, res_n\rangle\}$`
+
+We partition them in three subsets:
+
+<img src="https://raw.githubusercontent.com/yukariio/img/master/img-image-20210408130522422.png" alt="image-20210408130522422" style="zoom:80%;" />
+
+Mutation scores:
+
+<img src="https://raw.githubusercontent.com/yukariio/img/master/img-image-20210408131102392.png" alt="image-20210408131102392" style="zoom:80%;" />
+
+<img src="https://raw.githubusercontent.com/yukariio/img/master/img-image-20210408132244529.png" alt="image-20210408132244529" style="zoom:80%;" />
+
+</script></section><section  data-markdown><script type="text/template">
+
+### 6. Experiment Design
+
+Five quantum programs from the book [Programming Quantum Computers](https://www.amazon.com/Programming-Quantum-Computers-Essential-Algorithms/dp/1492039683) (2019).
+
+<img src="https://raw.githubusercontent.com/yukariio/img/master/img-image-20210408131902311.png" alt="image-20210408131902311" style="zoom:80%;" />
+
+</script></section><section  data-markdown><script type="text/template">
+
+two parameters K and M for experiments:
+
+- K = 2000
+
+- M = 20 
+
+</script></section><section  data-markdown><script type="text/template">
+
+Statistical test to assess passing or failing according to OPO.
+
+- One-sample Wilcoxon signed rank test with 99% confidence interval.
+
+Budget:
+
+- `$Budget_{OC}$`: 200
+- `$Budget_{IOC}$`: 200
+
+</script></section><section  data-markdown><script type="text/template">
+
+### 7. Experiments results
+
+</script></section><section  data-markdown><script type="text/template">
+
+<img src="https://raw.githubusercontent.com/yukariio/img/master/img-image-20210408133346997.png" alt="image-20210408133346997" style="zoom:80%;" />
+
+</script></section><section  data-markdown><script type="text/template">
+
+Conclusions of experiments:
+
+**Overall cost and effectiveness of testing**
+
+- Even with a less expensive coverage criterion (input coverage), we managed to achieve higher mutation scores.
+- Two explanations:
+  - Our programs are so small that we cannot observe differences.
+  - The input coverage is already expensive.
+
+</script></section><section  data-markdown><script type="text/template">
+
+**Comparisons between two test oracles**
+
+- With WOO the cost of finding a fault is low
+- If certain faults cannot be found with WOO, the cost of finding faults with OPO could be quite higher.
+
+</script></section><section  data-markdown><script type="text/template">
+
+Discussion:
+
+- The mutants that weren’t killed by the test suites generated from any coverage criterion.
+
+</script></section><section  data-markdown><script type="text/template">
+
+Limitations:
+
+- Scalability issues
+- Avoid dealing with qubits' phases (Black-box)
+  - More advanced coverage criteria that can also ensure the phase coverage of qubits
+- improvements in mutation analysis:
+  - Finding faults due to multiple qubits mutation operators
+  - Higher-order mutants
+
+</script></section><section  data-markdown><script type="text/template">
+
+Threats to Validity:
+
+- Internal validity threat: sampling strategies
+- conclusion validity threat: the selection of K and M.
+- construct validity threat: the measures we used may not be sufficient.
+- external validity threat: the results may not be generalizable. (only five quantum programs)
+
+</script></section><section  data-markdown><script type="text/template">
+
+### 8. Conclusion and future work
+
+Conclusion:
+
+To test quantum programs, this paper proposed 
+
+- three coverage criteria base on inputs and outputs of a quantum program.
+
+- two types of test oracles
+- a procedure to determine passing and failing of test suites with statistical analyses.
+
+All these contributions form *Quito*.
+
+</script></section><section  data-markdown><script type="text/template">
+
+Future work:
+
+- test minimization methods to reduce the number of test cases across the three
+  coverage criteria.
+- white-box test coverage criteria for quantum programs.
+- needing to make these testing techniques hardware error-aware.
+
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"transition":"slide","slideNumber":"c/t","showSlideNumber":"all"}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>
