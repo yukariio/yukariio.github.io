@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Modelling Quantum Circuits with UML</title>
+    <meta property="og:title" content="Modelling Quantum Circuits with UML" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://yukari.io/featured-slide.jpg" />
+    <meta property="og:url" content="https://yukari.io" />
+    <link rel="shortcut icon" href="./favicon.ico"/>
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/white.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/zenburn.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">
+<style type="text/css">
+p { text-align: left; font-size: 1em;}
+.note { font-size: 0.5em; }    
+</style>
+
+
+**Title**
+
+Modelling Quantum Circuits with UML
+
+**Authors**
+
+Ricardo Pérez-Castillo, Luis Jiménez-Navajas, Mario Piattini
+
+</script></section><section  data-markdown><script type="text/template">
+
+### Abstract
+
+This paper proposes a UML extension for the representation of quantum algorithms. 
+
+Our proposal comprises the definition of a UML profile based on various stereotypes that can be applied to the existing UML activity diagrams in order to represent quantum circuits.
+
+</script></section><section  data-markdown><script type="text/template">
+
+The remainder of the paper:
+
+- Section 2: The relevance of using UML in quantum software engineering.
+- Section 3: The UML profile for use in modeling quantum  circuits.
+- Section 4: The main implication and future efforts.
+
+</script></section><section  data-markdown><script type="text/template">
+
+### 2 UML for Quantum Software
+
+This section presents the usage of UML in quantum software  engineering and how it can be extended.
+
+</script></section><section  data-markdown><script type="text/template">
+
+#### 2.1 Usage of UML in Quantum Software
+
+UML can help by gathering and analysing software 
+requirements and incorporating them into a programme design in a technology- and methodology-independent manner.
+
+</script></section><section  data-markdown><script type="text/template">
+
+Advantages:
+
+1. Different perspectives
+2. Design validation
+3. Best practices
+4. Structured Design
+5. Tooling
+6. Software Modernisation
+
+</script></section><section  data-markdown><script type="text/template">
+
+UML needs to be adapted in order to capture all the new semantics and building blocks involved in quantum software.
+
+</script></section><section  data-markdown><script type="text/template">
+
+#### 2.2 UML Extensibility
+
+UML was defined on the basis of the MOF (Meta-Object Facility).
+
+It is possible to extend the UML by principally following three different approaches.
+
+</script></section><section  data-markdown><script type="text/template">
+
+1. A new instance of the MOF model
+
+   This approach consists of creating a completely new metamodel based on MOF.
+
+2. Derivation of a new UML metamodel
+
+   This approach adds new metamodel elements to the existing one.
+
+3. UML Profile
+
+   This is a lightweight extension approach that is based on the UML built-in extension mechanism, UML Profiling.
+
+</script></section><section  data-markdown><script type="text/template">
+
+Despite the fact that the expressiveness of UML 
+profiles is limited, standardisation and conformance are better.
+
+
+
+</script></section><section  data-markdown><script type="text/template">
+
+### 3. QUANTUM UML PROFILE
+
+This section presents the preliminary UML profile defined in order to represent quantum programmes as activity diagrams.
+
+</script></section><section  data-markdown><script type="text/template">
+
+![image-20210430010401220](https://raw.githubusercontent.com/yukariio/img/master/img-image-20210430010401220.png)
+
+</script></section><section  data-markdown><script type="text/template">
+
+- 6 stereotypes with which to add the new semantic related to quantum circuits. （right-hand side）
+- An excerpt of the UML metamodel employed to
+  represent UML Activity Diagrams. (left-hand side)
+
+</script></section><section  data-markdown><script type="text/template">
+
+The intuitive idea behind representing quantum circuits with UML activity diagrams:
+
+- *each algorithm* is represented with a single compound activity with the stereotype `$<<quantum\space circuit>>$`.
+- The various *activity partitions* (graphically represented as horizontal swim lanes) can be defined in the parent activity by employing the `$<<qubit>>$` stereotype.
+
+</script></section><section  data-markdown><script type="text/template">
+
+- All the different quantum gates applied in the circuits are, therefore, represented as *action* elements and are placed in the respective swim lane.
+
+</script></section><section  data-markdown><script type="text/template">
+
+- Ordinary quantum gates (such as H, Y, Z, etc.) are 
+  represented as *call operation actions* plus the `$<<quantum\space gate>>$` stereotype.
+- Conditional gates are represented with multiple action elements.
+  - The control qubits are represented with *send signal action* elements with the stereotype `$<<controlled\space qubit>>$`
+  - The gate applied is represented with the counterpart element, *accept event action*, plus the `$<<quantum\space gate>>$` stereotype.
+
+</script></section><section  data-markdown><script type="text/template">
+
+- Special operations, such as qubit measuring and qubit resetting, are represented with *value specification action* elements and their respective stereotypes 
+  `$<<measure>>$` and `$<<reset>>$`.
+
+</script></section><section  data-markdown><script type="text/template">
+
+#### 3.1 Running Example
+
+The paper provides a running example by using the teleportation algorithm.
+
+</script></section><section  data-markdown><script type="text/template">
+
+![image-20210430112722005](https://raw.githubusercontent.com/yukariio/img/master/img-image-20210430112722005.png)
+
+</script></section><section  data-markdown><script type="text/template">
+
+![image-20210430113045620](https://raw.githubusercontent.com/yukariio/img/master/img-image-20210430113045620.png)
+
+</script></section><section  data-markdown><script type="text/template">
+
+- The whole circuit is enclosed in a composed *activity* with the respective stereotype.
+- This circuit, therefore, has three horizontal activity partitions (one for each qubit).
+- The quantum gates and measures are then placed as action elements in the same position as in the original quantum circuit.
+
+</script></section><section  data-markdown><script type="text/template">
+
+- With regard to the quantum gates CNOT and CZ, these are modelled with pairs of *send signal action* and *accept event action* connected by a restriction edge.
+
+</script></section><section  data-markdown><script type="text/template">
+
+One interesting aspect of the quantum circuit represented 
+with UML
+
+- Measures can be connected with data store nodes that represent classical values after a qubit is measured. <p class = "note">(msg1 and register1)</p>
+
+</script></section><section  data-markdown><script type="text/template">
+
+If attention is paid to the equivalent QASM source code of the teleportation algorithm (see Figure 5), it will be noted that the explicit control flow modelled with the Quantum UML Profile is almost the same as that defined using the source code.
+
+</script></section><section  data-markdown><script type="text/template">
+
+![image-20210430115322003](https://raw.githubusercontent.com/yukariio/img/master/img-image-20210430115322003.png)
+
+</script></section><section  data-markdown><script type="text/template">
+
+### 4. Discussion
+
+This paper introduces the idea of modelling quantum circuits in UML Activity Diagrams.
+
+The approach followed in this research consists of a lightweight extension based on a UML profile.
+
+UML Profile has two clear advantages:
+
+1. The reuse of existing UML modelling tools.
+2. integration with other standard UML elements, which is useful as regards representing hybrid information systems.
+
+</script></section><section  data-markdown><script type="text/template">
+
+The main implication of this work is that quantum circuits 
+can be designed and modelled in the UML.
+
+- The existing UML-based code generators couldbe extended in order to automatically generate quantum source code, such as QASM, Q#, or Qiskit.
+- These UML representations may be key aspects during the software modernisation processes employed to migrate classical and quantum software towards hybrid information systems.
+
+</script></section><section  data-markdown><script type="text/template">
+
+#### Future work
+
+The Quantum UML Profile will cover other viewpoints and aspects of the analysis and design of hybrid information systems.
+
+For example, use case, class, sequence, component and deployment diagrams will be extended with the Quantum UML Profile.</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"transition":"slide","slideNumber":"c/t","showSlideNumber":"all"}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>
